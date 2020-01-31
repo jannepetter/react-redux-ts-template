@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux'
+import { getStuff } from './reducers/reducer1'
 
-const App = () => {
+interface Props {
+  getStuff: any
+  pokemons:any
+}
+
+const App: React.FC<Props> = (props) => {
+  const dispatch = useDispatch()
+  let page='0'
+
+  useEffect(() => {
+    dispatch(getStuff(page))
+  }, [dispatch,page])
+  console.log(props.pokemons,'check')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      Hellou
     </div>
   );
 }
-
-export default App;
+const mapDispatchToProps = {
+  getStuff
+}
+const mapStateToProps = (state:any) => {
+  return {
+    pokemons: state.stuff,
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
